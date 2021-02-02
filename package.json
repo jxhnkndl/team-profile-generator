@@ -1,0 +1,22 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "Application that collects information about team members using command line prompts and then generates an HTML document displaying member profiles.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jxhnkndl/team-profile-generator.git"
+  },
+  "author": "J.K. Royston",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jxhnkndl/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/jxhnkndl/team-profile-generator#readme"
+}
