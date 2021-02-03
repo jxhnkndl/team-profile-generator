@@ -6,7 +6,7 @@ const Engineer = require("../lib/Engineer");
 describe("Engineer", () => {
   
   // Test object instantiation
-  describe("Engineers object instantiation", () => {
+  describe("Engineer object instantiation", () => {
     it("Creates an object with name, id, email, and github properties", () => {
       const engineer = new Engineer("John Smith", 1, "johnsmith@gmail.com", "johncodes");
 
