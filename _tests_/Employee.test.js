@@ -1,4 +1,10 @@
+// Import Employee class
+const Employee = require('../lib/Employee');
+
+// Test Employee class
 describe('Employee', () => {
+  
+  // Test object instantiation
   describe('Employee object instantiation', () => {
     it('Creates an object with name, id, and email properties when passed valid arguments', () => {
       const newEmployee = new Employee('John Smith', 1, 'johnsmith@gmail.com');
@@ -10,6 +16,7 @@ describe('Employee', () => {
     });
   });
 
+  // Test getName() method
   describe('getName', () => {
     it("Should return the object's name property", () => {
       const newEmployee = new Employee('John Smith', 1, 'johnsmith@gmail.com');
@@ -18,6 +25,7 @@ describe('Employee', () => {
     });
   });
 
+  // Test getId() method
   describe('getId', () => {
     it("Should return the object's id property", () => {
       const newEmployee = new Employee('John Smith', 1, 'johnsmith@gmail.com');
@@ -26,6 +34,7 @@ describe('Employee', () => {
     });
   });
 
+  // Test getEmail() method
   describe('getEmail', () => {
     it("Should return the object's email property", () => {
       const newEmployee = new Employee('John Smith', 1, 'johnsmith@gmail.com');
@@ -34,6 +43,7 @@ describe('Employee', () => {
     });
   });
 
+  // Test getRole() method
   describe('getRole', () => {
     it("Should return the string 'Employee'", () => {
       const newEmployee = new Employee('John Smith', 1, 'johnsmith@gmail.com');
