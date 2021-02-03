@@ -6,7 +6,7 @@ describe('Employee', () => {
   
   // Test object instantiation
   describe('Employee object instantiation', () => {
-    it('Creates an object with name, id, and email properties when passed valid arguments', () => {
+    it('Creates an object with name, id, and email properties', () => {
       const employee = new Employee("John Smith", 1, "johnsmith@gmail.com");
 
       expect(employee).toBeInstanceOf(Employee);
