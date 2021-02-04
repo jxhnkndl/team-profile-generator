@@ -15,42 +15,93 @@ const team = [];
 const questions = [
   [
     {
+      name: 'init',
+      type: 'confirm',
+      message: 'Welcome to the Team Profile Generator. Are you ready to begin?',
+      
+    },
+    {
       name: 'name',
       type: 'input',
-      message: 'What is your name?',
+      message: 'Your Name:',
+    },
+    {
+      name: 'id',
+      type: 'input',
+      message: 'Your Employee ID:'
+    },
+    {
+      name: 'email',
+      type: 'input',
+      message: 'Your Email Address:'
+    },
+    {
+      name: 'officeNumber',
+      type: 'input',
+      message: 'Your Office Number:'
     },
     {
       name: 'upNext',
       type: 'list',
       choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
-      message: 'What would you like to do next?',
-    },
+      message: 'What would you like to do for your team next?',
+    }
   ],
   [
     {
       name: 'name',
       type: 'input',
-      message: "Engineer's Name",
+      message: "Engineer's Name:",
+    },
+    {
+      name: 'id',
+      type: 'input',
+      message: "Engineer's Employee ID:"
+    },
+    {
+      name: 'email',
+      type: 'input',
+      message: "Engineer's Email Address:"
+    },
+    {
+      name: 'github',
+      type: 'input',
+      message: "Engineer's GitHub Username:"
     },
     {
       name: 'upNext',
       type: 'list',
       choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
-      message: 'What would you like to do next?',
-    },
+      message: 'What would you like to do for your team next?',
+    }
   ],
   [
     {
       name: 'name',
       type: 'input',
-      message: "Intern's Name",
+      message: "Intern's Name:",
+    },
+    {
+      name: 'id',
+      type: 'input',
+      message: "Intern's Employee ID:"
+    },
+    {
+      name: 'email',
+      type: 'input',
+      message: "Intern's Email Address:"
+    },
+    {
+      name: 'school',
+      type: 'input',
+      message: "Intern's College or University:"
     },
     {
       name: 'upNext',
       type: 'list',
       choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
-      message: 'What would you like to do next?',
-    },
+      message: 'What would you like to do for your team next?',
+    }
   ],
 ];
 
@@ -60,7 +111,7 @@ function ask(questionArr) {
   inquirer
     .prompt(questionArr)
     .then((member) => {
-      // Push newly created team member object to team array
+      // Push newly created team member to team array
       team.push(member);
 
       // Determine whether to create a new team member or exit app
