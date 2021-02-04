@@ -16,9 +16,7 @@ const newManager = [
   {
     name: 'role',
     type: 'list',
-    choices: [
-      { value: 'manager', name: 'Start' },
-    ],
+    choices: [{ value: 'manager', name: 'Start' }],
     message: 'Welcome to the Team Profile Generator. Are you ready to begin?',
   },
   {
@@ -46,7 +44,7 @@ const newManager = [
     type: 'list',
     choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
     message: 'What would you like to do for your team next?',
-  }    
+  },
 ];
 
 // Prompts: Add new engineer
@@ -76,7 +74,7 @@ const newEngineer = [
     type: 'list',
     choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
     message: 'What would you like to do for your team next?',
-  }
+  },
 ];
 
 // Prompts: Add new intern
@@ -110,25 +108,52 @@ const newIntern = [
 ];
 
 // Control flow of inquirer prompts
-function ask(questionArr) {
+const ask = (questionArr) => {
   inquirer
     .prompt(questionArr)
     .then((member) => {
       // Push newly created team member to team array
       team.push(member);
 
-      // Determine whether to create a new team member or exit app
+      // If upNext is engineer or intern, create a new team member
+      // Otherwise, call createProfiles to instantiate objects for each member
       if (member.upNext === 'Add Engineer') {
         ask(newEngineer);
       } else if (member.upNext === 'Add Intern') {
         ask(newIntern);
       } else {
-        console.log('Process complete.');
-        console.log(team);
+        createProfiles(team);
       }
     })
     .catch((err) => console.log(err));
-}
+};
+
+// Instantiate class objects
+const createProfiles = (team) => {
+  const profiles = team.map((member) => {
+    const { name, id, email } = member;
+
+    // If profile has officeNumber property, instantiate Manager object
+    if (member.hasOwnProperty('officeNumber')) {
+      const { officeNumber } = member;
+      return new Manager(name, id, email, officeNumber);
+    }
+
+    // If profile has github property, instantiate Engineer object
+    if (member.hasOwnProperty('github')) {
+      const { github } = member;
+      return new Engineer(name, id, email, github);
+    }
+
+    // If profile has school property, instantiate Intern object
+    if (member.hasOwnProperty('school')) {
+      const { school } = member;
+      return new Intern(name, id, email, school);
+    }
+  });
+
+  console.log(profiles);
+};
 
 // Init app
 ask(newManager);
