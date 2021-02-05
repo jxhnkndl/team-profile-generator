@@ -23,8 +23,7 @@ const team = [];
 const addManager = [
   {
     name: 'role',
-    type: 'list',
-    choices: [{ value: 'manager', name: 'Start' }],
+    type: 'confirm',
     message: 'Welcome to the Team Profile Generator. Are you ready to begin?',
   },
   {
@@ -184,6 +183,17 @@ const generateHtml = (profiles) => {
   // Wrap profile cards in HTML/Bootstrap boilerplate
   const rawHtml = wrapProfileCards(profileCards);
   const cleanHtml = beautify(rawHtml, { indent_size: 2 });
+
+  // Write final HTML document
+  writeHtml(cleanHtml);
+};
+
+// Write and return final HTML document
+const writeHtml = (cleanHtml) => {
+  fs.writeFile('./dist/team-profiles.html', cleanHtml, (err) => {
+    if (err) throw err;
+    console.log('HTML document successfully created in the /dist folder.');
+  });
 };
 
 // Init app
