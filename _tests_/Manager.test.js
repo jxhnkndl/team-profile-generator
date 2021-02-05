@@ -44,6 +44,15 @@ describe("Manager", () => {
       expect(manager.getEmail()).toEqual("johnsmith@gmail.com");
     });
   });
+  
+  // Test getOffice() method
+  describe("getOffice", () => {
+    it("Should return the object's officeNumber property", () => {
+      const manager = new Manager("John Smith", 1, "johnsmith@gmail.com", 50);
+
+      expect(manager.getOffice()).toEqual(50);
+    });
+  });
 
   // Test getRole() method
   describe("getRole", () => {
