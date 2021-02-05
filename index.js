@@ -163,7 +163,7 @@ const createProfiles = (team) => {
 };
 
 // Fille HTML templates
-const generateHtml = (profiles) => {
+const generateCards = (profiles) => {
   let output = "";
 
   // Create HTML profile card by role
