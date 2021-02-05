@@ -4,13 +4,18 @@ const inquirer = require('inquirer');
 const outdent = require('outdent');
 const beautify = require('js-beautify').html;
 
+// Import question arrays
+const addManager = require('./src/questions-manager');
+const addEngineer = require('./src/questions-engineer');
+const addIntern = require('./src/questions-intern');
+
 // Import classes
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
-// Import templates
+// Import HTML templates
 const addManagerCard = require('./src/card-manager');
 const addEngineerCard = require('./src/card-engineer');
 const addInternCard = require('./src/card-intern');
@@ -19,111 +24,23 @@ const wrapProfileCards = require('./src/card-wrapper');
 // Team members
 const team = [];
 
-// Prompts: Add new manager
-const addManager = [
-  {
-    name: 'role',
-    type: 'confirm',
-    message: 'Welcome to the Team Profile Generator. Are you ready to begin?',
-  },
-  {
-    name: 'name',
-    type: 'input',
-    message: 'Your Name:',
-  },
-  {
-    name: 'id',
-    type: 'input',
-    message: 'Your Employee ID:',
-  },
-  {
-    name: 'email',
-    type: 'input',
-    message: 'Your Email Address:',
-  },
-  {
-    name: 'officeNumber',
-    type: 'input',
-    message: 'Your Office Number:',
-  },
-  {
-    name: 'upNext',
-    type: 'list',
-    choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
-    message: 'What would you like to do for your team next?',
-  },
-];
+// Init application
+ask(addManager);
 
-// Prompts: Add new engineer
-const addEngineer = [
-  {
-    name: 'name',
-    type: 'input',
-    message: "Engineer's Name:",
-  },
-  {
-    name: 'id',
-    type: 'input',
-    message: "Engineer's Employee ID:",
-  },
-  {
-    name: 'email',
-    type: 'input',
-    message: "Engineer's Email Address:",
-  },
-  {
-    name: 'github',
-    type: 'input',
-    message: "Engineer's GitHub Username:",
-  },
-  {
-    name: 'upNext',
-    type: 'list',
-    choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
-    message: 'What would you like to do for your team next?',
-  },
-];
+// On application launch, call ask(addManager):
+// 1) Create a manager object
+// 2) Choose to create engineer, intern, or exit
+// 3A) If engineer, create engineer object
+// 3B) If intern, create intern object
+// 4) Cycle back to 2 and continue
+// 5) If exit, stop cycling through question arrays
 
-// Prompts: Add new intern
-const addIntern = [
-  {
-    name: 'name',
-    type: 'input',
-    message: "Intern's Name:",
-  },
-  {
-    name: 'id',
-    type: 'input',
-    message: "Intern's Employee ID:",
-  },
-  {
-    name: 'email',
-    type: 'input',
-    message: "Intern's Email Address:",
-  },
-  {
-    name: 'school',
-    type: 'input',
-    message: "Intern's College or University:",
-  },
-  {
-    name: 'upNext',
-    type: 'list',
-    choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
-    message: 'What would you like to do for your team next?',
-  },
-];
-
-// Control flow of inquirer prompts
-const ask = (questionArr) => {
+function ask(questionArr) {
   inquirer
     .prompt(questionArr)
     .then((member) => {
-      // Push newly created team member to team array
       team.push(member);
 
-      // If upNext is engineer or intern, create a new team member
-      // Otherwise, call createProfiles to instantiate objects for each member
       if (member.upNext === 'Add Engineer') {
         ask(addEngineer);
       } else if (member.upNext === 'Add Intern') {
@@ -133,10 +50,11 @@ const ask = (questionArr) => {
       }
     })
     .catch((err) => console.log(err));
-};
+}
 
 // Instantiate objects
-const createProfiles = (team) => {
+function createProfiles(team) {
+  // Iterate through each team member profile
   const profiles = team.map((member) => {
     const { name, id, email } = member;
 
@@ -159,14 +77,15 @@ const createProfiles = (team) => {
     }
   });
 
+  // Generate HTML from the newly instantiated profiles
   generateHtml(profiles);
-};
+}
 
-// Fille HTML templates
-const generateHtml = (profiles) => {
+// Generate HTML
+function generateHtml(profiles) {
   let profileCards = '';
 
-  // Create HTML profile card by role and add to output
+  // Create HTML profile cards based on memeber role
   profiles.forEach((profile) => {
     if (profile instanceof Manager) {
       const card = addManagerCard(profile);
@@ -182,6 +101,8 @@ const generateHtml = (profiles) => {
 
   // Wrap profile cards in HTML/Bootstrap boilerplate
   const rawHtml = wrapProfileCards(profileCards);
+
+  // Clean up and properly format the raw html
   const cleanHtml = beautify(rawHtml, { indent_size: 2 });
 
   // Write final HTML document
@@ -189,12 +110,9 @@ const generateHtml = (profiles) => {
 };
 
 // Write and return final HTML document
-const writeHtml = (cleanHtml) => {
+function writeHtml(cleanHtml) {
   fs.writeFile('./dist/team-profiles.html', cleanHtml, (err) => {
     if (err) throw err;
     console.log('HTML document successfully created in the /dist folder.');
   });
 };
-
-// Init app
-ask(addManager);
