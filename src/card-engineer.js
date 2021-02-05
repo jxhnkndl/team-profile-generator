@@ -1,8 +1,8 @@
 // Import modules
 const outdent = require('outdent');
 
-// Engineer profile template
-const engineerCard = (profile) => outdent`
+// Engineer profile templating function
+const engineerCard = (profile) =>`
   <div class="card m-3 shadow" style="width: 300px">
     <div class="card-header bg-primary text-white">
       <p class="h3">${profile.getName()}</p>
@@ -28,7 +28,6 @@ const engineerCard = (profile) => outdent`
       </ul>
     </div>
   </div>
-  
 `;
 
 module.exports = engineerCard;

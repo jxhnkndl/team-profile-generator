@@ -28,7 +28,6 @@ const managerCard = (profile) => outdent`
       </ul>
     </div>
   </div>
-  
 `;
 
 module.exports = managerCard;

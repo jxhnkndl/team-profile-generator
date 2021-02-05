@@ -1,7 +1,7 @@
 // Import modules
 const outdent = require('outdent');
 
-// Intern profile template
+// Intern profile templating function
 const internCard = (profile) => outdent`
   <div class="card m-3 shadow" style="width: 300px">
     <div class="card-header bg-primary text-white">
@@ -28,7 +28,6 @@ const internCard = (profile) => outdent`
       </ul>
     </div>
   </div>
-  
 `;
 
 module.exports = internCard;

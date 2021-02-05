@@ -2,6 +2,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const outdent = require('outdent');
+const beautify = require('js-beautify').html;
 
 // Import classes
 const Employee = require('./lib/Employee');
@@ -13,6 +14,7 @@ const Manager = require('./lib/Manager');
 const addManagerCard = require('./src/card-manager');
 const addEngineerCard = require('./src/card-engineer');
 const addInternCard = require('./src/card-intern');
+const wrapProfileCards = require('./src/card-wrapper');
 
 // Team members
 const team = [];
@@ -158,30 +160,31 @@ const createProfiles = (team) => {
     }
   });
 
-  console.log(profiles);
   generateHtml(profiles);
 };
 
 // Fille HTML templates
-const generateCards = (profiles) => {
-  let output = "";
+const generateHtml = (profiles) => {
+  let profileCards = '';
 
-  // Create HTML profile card by role
-  profiles.forEach(profile => {
+  // Create HTML profile card by role and add to output
+  profiles.forEach((profile) => {
     if (profile instanceof Manager) {
       const card = addManagerCard(profile);
-      output += card;
+      profileCards += card;
     } else if (profile instanceof Engineer) {
       const card = addEngineerCard(profile);
-      output += card;
+      profileCards += card;
     } else if (profile instanceof Intern) {
       const card = addInternCard(profile);
-      output += card;
+      profileCards += card;
     }
   });
 
-  console.log(output);
-}
+  // Wrap profile cards in HTML/Bootstrap boilerplate
+  const rawHtml = wrapProfileCards(profileCards);
+  const cleanHtml = beautify(rawHtml, { indent_size: 2 });
+};
 
 // Init app
 ask(addManager);
