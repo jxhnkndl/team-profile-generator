@@ -1,6 +1,7 @@
 // Import packages
 const fs = require('fs');
 const inquirer = require('inquirer');
+const outdent = require('outdent');
 
 // Import classes
 const Employee = require('./lib/Employee');
@@ -8,11 +9,16 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
+// Import templates
+const addManagerCard = require('./src/card-manager');
+const addEngineerCard = require('./src/card-engineer');
+const addInternCard = require('./src/card-intern');
+
 // Team members
 const team = [];
 
 // Prompts: Add new manager
-const newManager = [
+const addManager = [
   {
     name: 'role',
     type: 'list',
@@ -48,7 +54,7 @@ const newManager = [
 ];
 
 // Prompts: Add new engineer
-const newEngineer = [
+const addEngineer = [
   {
     name: 'name',
     type: 'input',
@@ -78,7 +84,7 @@ const newEngineer = [
 ];
 
 // Prompts: Add new intern
-const newIntern = [
+const addIntern = [
   {
     name: 'name',
     type: 'input',
@@ -118,9 +124,9 @@ const ask = (questionArr) => {
       // If upNext is engineer or intern, create a new team member
       // Otherwise, call createProfiles to instantiate objects for each member
       if (member.upNext === 'Add Engineer') {
-        ask(newEngineer);
+        ask(addEngineer);
       } else if (member.upNext === 'Add Intern') {
-        ask(newIntern);
+        ask(addIntern);
       } else {
         createProfiles(team);
       }
@@ -128,7 +134,7 @@ const ask = (questionArr) => {
     .catch((err) => console.log(err));
 };
 
-// Instantiate class objects
+// Instantiate objects
 const createProfiles = (team) => {
   const profiles = team.map((member) => {
     const { name, id, email } = member;
@@ -153,7 +159,29 @@ const createProfiles = (team) => {
   });
 
   console.log(profiles);
+  generateHtml(profiles);
 };
 
+// Fille HTML templates
+const generateHtml = (profiles) => {
+  let output = "";
+
+  // Create HTML profile card by role
+  profiles.forEach(profile => {
+    if (profile instanceof Manager) {
+      const card = addManagerCard(profile);
+      output += card;
+    } else if (profile instanceof Engineer) {
+      const card = addEngineerCard(profile);
+      output += card;
+    } else if (profile instanceof Intern) {
+      const card = addInternCard(profile);
+      output += card;
+    }
+  });
+
+  console.log(output);
+}
+
 // Init app
-ask(newManager);
+ask(addManager);
