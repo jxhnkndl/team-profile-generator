@@ -4,22 +4,22 @@ const inquirer = require('inquirer');
 const outdent = require('outdent');
 const beautify = require('js-beautify').html;
 
-// Import question arrays
-const addManager = require('./src/questions-manager');
-const addEngineer = require('./src/questions-engineer');
-const addIntern = require('./src/questions-intern');
-
 // Import classes
 const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
+// Import question arrays
+const addManager = require('./src/question-arrays/questions-manager');
+const addEngineer = require('./src/question-arrays/questions-engineer');
+const addIntern = require('./src/question-arrays/questions-intern');
+
 // Import HTML templates
-const addManagerCard = require('./src/card-manager');
-const addEngineerCard = require('./src/card-engineer');
-const addInternCard = require('./src/card-intern');
-const wrapProfileCards = require('./src/card-wrapper');
+const addManagerCard = require('./src/html-templates/card-manager');
+const addEngineerCard = require('./src/html-templates/card-engineer');
+const addInternCard = require('./src/html-templates/card-intern');
+const wrapProfileCards = require('./src/html-templates/card-wrapper');
 
 // Team members
 const team = [];
@@ -27,12 +27,17 @@ const team = [];
 // Init application
 ask(addManager);
 
-// On application launch, call ask(addManager):
-// 1) Create a manager object
-// 2) Choose to create engineer, intern, or exit
-// 3A) If engineer, create engineer object
-// 3B) If intern, create intern object
+// On application launch: 
+// ================================================
+// 1) Call ask() with the addManager question array
+// 2) Answer prompts 
+// 3) Choose whether to add engineer, intern, or exit
+// 3A) If engineer: Call ask() with addEngineer 
+//     question array
+// 3B) If intern, call ask() with addIntern question 
+//     array
 // 4) Cycle back to 2 and continue
+// ================================================
 // 5) If exit, stop cycling through question arrays
 
 function ask(questionArr) {
