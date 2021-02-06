@@ -10,19 +10,121 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
-// Import question arrays
-const addManager = require('./src/question-arrays/questions-manager');
-const addEngineer = require('./src/question-arrays/questions-engineer');
-const addIntern = require('./src/question-arrays/questions-intern');
-
 // Import HTML templates
-const addManagerCard = require('./src/html-templates/card-manager');
-const addEngineerCard = require('./src/html-templates/card-engineer');
-const addInternCard = require('./src/html-templates/card-intern');
-const wrapProfileCards = require('./src/html-templates/card-wrapper');
+const addManagerCard = require('./src/card-manager');
+const addEngineerCard = require('./src/card-engineer');
+const addInternCard = require('./src/card-intern');
+const wrapProfileCards = require('./src/card-wrapper');
 
 // Team members
 const team = [];
+
+// Prompts: Init application + add manager
+const addManager = [
+  {
+    name: 'role',
+    type: 'confirm',
+    message: 'Welcome to the Team Profile Generator. Are you ready to begin?',
+  },
+  {
+    name: 'name',
+    type: 'input',
+    message: 'Your Name:',
+    validate: isValidString
+  },
+  {
+    name: 'id',
+    type: 'input',
+    message: 'Your Employee ID:',
+    validate: isValidString
+  },
+  {
+    name: 'email',
+    type: 'input',
+    message: 'Your Email Address:',
+    validate: isValidEmail
+  },
+  {
+    name: 'officeNumber',
+    type: 'input',
+    message: 'Your Office Number:',
+    validate: isValidString
+  },
+  {
+    name: 'upNext',
+    type: 'list',
+    choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
+    message: 'What would you like to do next?',
+  },
+];
+
+// Prompts: Add new engineer
+const addEngineer = [
+  {
+    name: 'name',
+    type: 'input',
+    message: "Engineer's Name:",
+    validate: isValidString
+  },
+  {
+    name: 'id',
+    type: 'input',
+    message: "Engineer's Employee ID:",
+    validate: isValidString
+  },
+  {
+    name: 'email',
+    type: 'input',
+    message: "Engineer's Email Address:",
+    validate: isValidEmail
+  },
+  {
+    name: 'github',
+    type: 'input',
+    message: "Engineer's GitHub Username:",
+    validate: isValidString
+  },
+  {
+    name: 'upNext',
+    type: 'list',
+    choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
+    message: 'What would you like to do next?',
+  },
+];
+
+// Prompts: Add new intern
+const addIntern = [
+  {
+    name: 'name',
+    type: 'input',
+    message: "Intern's Name:",
+    validate: isValidString
+  },
+  {
+    name: 'id',
+    type: 'input',
+    message: "Intern's Employee ID:",
+    validate: isValidString
+  },
+  {
+    name: 'email',
+    type: 'input',
+    message: "Intern's Email Address:",
+    validate: isValidEmail
+  },
+  {
+    name: 'school',
+    type: 'input',
+    message: "Intern's College or University:",
+    validate: isValidString
+  },
+  {
+    name: 'upNext',
+    type: 'list',
+    choices: ['Add Engineer', 'Add Intern', 'Complete Team'],
+    message: 'What would you like to do next?',
+  },
+];
 
 // Init application
 ask(addManager);
@@ -121,3 +223,21 @@ function writeHtml(cleanHtml) {
     console.log('HTML document successfully created in the /dist folder.');
   });
 };
+
+// Prompt Validator: Verify string input is not an empty string
+function isValidString(value) {
+  const re = /^\s*$/;
+  const isEmpty = re.test(value);
+
+  if (isEmpty) return 'Invalid entry. Please provide a response.';
+  else return true;
+}
+
+// Prompt Validator: Verify email input is valid email address
+function isValidEmail(value) {
+  const re = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  const isEmail = re.test(value);
+
+  if (isEmail) return isEmail;
+  else return 'Please use a valid email address.'
+}
