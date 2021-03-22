@@ -21,11 +21,14 @@ The Team Profile Generator collects basic professional details about the members
 
 
 ## Technologies
-**Core Technologies:**  
-Node.js, JavaScript, Inquirer.js, HTML, Bootstrap 4  
-
-**Supplmentary Packages:**  
-Outdent, js-beautify, Jest
+* Node.js
+* JavaScript
+* Inquirer.js
+* HTML
+* CSS
+* Bootstrap 4
+* js-beautify
+* Jest
 
 
 ## Installation
